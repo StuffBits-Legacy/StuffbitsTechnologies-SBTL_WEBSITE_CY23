@@ -1,5 +1,10 @@
 import { motion } from 'framer-motion'
-import { Cpu, Code2, Package, Monitor } from 'lucide-react'
+import {
+  EmbeddedHardwareIcon,
+  EmbeddedFirmwareIcon,
+  ProductionIcon,
+  SoftwareDevelopmentIcon,
+} from '../icons/ServiceIcons'
 
 const fadeUp = {
   initial: { opacity: 0, y: 18 },
@@ -11,7 +16,7 @@ const fadeUp = {
 const SERVICES = [
   {
     title: 'Embedded Hardware (incl. PCB Layout)',
-    icon: Cpu,
+    icon: EmbeddedHardwareIcon,
     accent: 'bg-cyan-500/10 group-hover:bg-cyan-500/15',
     tags: [
       'STM32',
@@ -33,19 +38,19 @@ const SERVICES = [
   },
   {
     title: 'Embedded Firmware',
-    icon: Code2,
+    icon: EmbeddedFirmwareIcon,
     accent: 'bg-emerald-500/10 group-hover:bg-emerald-500/15',
     tags: ['C/C++', 'FreeRTOS', 'Zephyr', 'AUTOSAR', 'MISRA-C', 'CAN', 'CAN FD', 'OTA'],
   },
   {
     title: 'Production',
-    icon: Package,
+    icon: ProductionIcon,
     accent: 'bg-amber-500/10 group-hover:bg-amber-500/15',
     tags: ['SMT', 'Through-Hole', 'ICT', 'Functional Test', 'DFA', 'Supply Chain', 'BOM'],
   },
   {
     title: 'Software Development',
-    icon: Monitor,
+    icon: SoftwareDevelopmentIcon,
     accent: 'bg-blue-500/10 group-hover:bg-blue-500/15',
     tags: ['React', 'Node.js', 'Golang', 'Java', 'Python', 'REST API', 'Cloud', 'Mobile Apps', 'MQTT'],
   },

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Package, CheckCircle2, Wrench } from 'lucide-react'
+import { CheckCircle2, Wrench } from 'lucide-react'
+import { ProductionIcon } from '../icons/ServiceIcons'
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -47,7 +48,7 @@ export default function ComponentAssembly({ id = 'component' }) {
           {/* Content */}
           <motion.div {...fadeUp}>
             <div className="w-11 h-11 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
-              <Package className="text-gold" size={22} />
+              <ProductionIcon className="text-gold" size={22} />
             </div>
             <p className="text-slate-600 leading-relaxed mb-3 text-sm">
               <strong>What it is:</strong> Production is the process of building your electronics into finished,

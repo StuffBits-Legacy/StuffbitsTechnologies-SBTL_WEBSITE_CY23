@@ -5,16 +5,14 @@ import {
   MapPin,
   Mail,
   Phone,
-  MessageCircle,
   Clock,
   Send,
   CheckCircle2,
   AlertCircle,
-  Linkedin,
-  Instagram,
-  Facebook,
   Loader2,
 } from 'lucide-react'
+import { WhatsAppIcon } from '../components/icons/BrandIcons'
+import SocialIconLinks from '../components/SocialIconLinks'
 const FooterMap = lazy(() => import('../components/layout/FooterMap'))
 
 const CONTACT_TYPES = [
@@ -42,13 +40,6 @@ const HADAPSAR_COORDS = { lat: 18.50577344399995, lng: 73.93404613969308 }
 const MAP_QUERY = `${HADAPSAR_COORDS.lat},${HADAPSAR_COORDS.lng}`
 // Using `/maps?q=` (not `/maps/search/?api=1&query=`) tends to keep the marker on the exact coordinate.
 const MAP_LINK = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=17`
-
-const SOCIAL_LINKS = [
-  { href: 'https://www.linkedin.com/company/stuffbits-technosolutions-pvt-ltd', label: 'LinkedIn', icon: Linkedin },
-  { href: 'https://www.instagram.com/_stuffbits_', label: 'Instagram', icon: Instagram },
-  { href: 'https://www.facebook.com/stuffbits.technologies', label: 'Facebook', icon: Facebook },
-  { href: 'https://wa.me/919860999078', label: 'WhatsApp', icon: MessageCircle },
-]
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -404,7 +395,7 @@ export default function ContactPage() {
                     className="flex gap-4 text-slate-600 hover:text-gold transition-colors group"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy text-gold flex-shrink-0 group-hover:bg-none group-hover:bg-gold group-hover:text-navy transition-colors">
-                      <MessageCircle size={22} />
+                      <WhatsAppIcon size={22} />
                     </div>
                     <div>
                       <p className="font-medium text-slate-800">WhatsApp</p>
@@ -426,20 +417,7 @@ export default function ContactPage() {
 
               <div>
                 <h3 className="font-heading font-semibold text-slate-800 mb-4">Connect with us</h3>
-                <div className="flex gap-3">
-                  {SOCIAL_LINKS.map(({ href, label, icon: _Icon }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-slate-200 text-slate-600 hover:border-gold hover:text-gold hover:bg-gold/5 transition-colors"
-                      aria-label={label}
-                    >
-                      <_Icon size={20} />
-                    </a>
-                  ))}
-                </div>
+                <SocialIconLinks tone="light" iconSize={18} className="[&_a]:h-11 [&_a]:w-11 [&_a]:border-2" />
               </div>
 
               <div className="p-6 rounded-xl bg-navy text-white">
@@ -453,7 +431,7 @@ export default function ContactPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-light text-navy font-semibold rounded-lg transition-colors"
                 >
-                  <MessageCircle size={18} />
+                  <WhatsAppIcon size={18} />
                   Chat on WhatsApp
                 </a>
               </div>

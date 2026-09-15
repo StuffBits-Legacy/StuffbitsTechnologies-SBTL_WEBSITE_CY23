@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Linkedin, MapPin } from 'lucide-react'
+import { ArrowRight, MapPin } from 'lucide-react'
+import { LinkedInIcon } from '../components/icons/BrandIcons'
 
 const COMPANY_LINKEDIN = 'https://in.linkedin.com/company/stuffbits-technosolutions-pvt-ltd'
 
@@ -143,7 +144,7 @@ export default function TeamPage() {
                       className="inline-flex items-center gap-1 text-gold hover:text-gold-light transition-colors"
                       aria-label={member.linkedin ? `View ${member.name} on LinkedIn` : 'View StuffBits on LinkedIn'}
                     >
-                      <Linkedin size={18} />
+                      <LinkedInIcon size={18} />
                     </a>
                   </motion.div>
                 ))}

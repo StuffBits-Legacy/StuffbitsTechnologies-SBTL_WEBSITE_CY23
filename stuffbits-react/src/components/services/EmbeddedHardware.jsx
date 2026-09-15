@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Cpu, CircuitBoard, CheckCircle2, Layers, Ruler } from 'lucide-react'
+import { CircuitBoard, CheckCircle2, Layers, Ruler } from 'lucide-react'
+import { EmbeddedHardwareIcon } from '../icons/ServiceIcons'
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -90,7 +91,7 @@ export default function EmbeddedHardware({ id = 'hardware' }) {
           {/* Content */}
           <motion.div {...fadeUp} className="order-1 lg:order-2">
             <div className="w-11 h-11 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
-              <Cpu className="text-gold" size={22} />
+              <EmbeddedHardwareIcon className="text-gold" size={22} />
             </div>
             <p className="text-slate-600 leading-relaxed mb-3 text-sm">
               <strong>What it is:</strong> Embedded hardware is the physical electronic system — circuit boards,

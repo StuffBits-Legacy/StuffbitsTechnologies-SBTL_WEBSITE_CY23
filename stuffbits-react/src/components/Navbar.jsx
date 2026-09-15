@@ -27,25 +27,21 @@ const navLinks = [
       {
         to: '/services/embedded-hardware',
         label: 'Embedded Hardware',
-        desc: 'Hardware design + PCB routing, DFM & fabrication support',
         icon: Cpu,
       },
       {
         to: '/services/embedded-firmware',
         label: 'Embedded Firmware',
-        desc: 'RTOS, AUTOSAR, safety & MISRA-C',
         icon: Code2,
       },
       {
         to: '/services/component-assembly',
         label: 'Production',
-        desc: 'Prototype builds to volume production support',
         icon: Package,
       },
       {
         to: '/services/it-development',
         label: 'Software Development',
-        desc: 'Web, mobile & connected platforms',
         icon: Monitor,
       },
     ],
@@ -57,25 +53,21 @@ const navLinks = [
       {
         to: '/verticals/automotive',
         label: 'Automotive',
-        desc: 'Embedded intelligence for mobility',
         icon: Car,
       },
       {
         to: '/verticals/industrial',
         label: 'Industrial',
-        desc: 'Rugged systems for factories & plants',
         icon: Factory,
       },
       {
         to: '/verticals/iot',
         label: 'IIoT',
-        desc: 'Connectivity, telemetry & monitoring',
         icon: Wifi,
       },
       {
         to: '/verticals/digital-services',
         label: 'Software Development',
-        desc: 'Digital products & platforms',
         icon: Monitor,
       },
     ],
@@ -88,13 +80,11 @@ const navLinks = [
       {
         to: '/about',
         label: 'About Us',
-        desc: 'Our story & approach',
         icon: Info,
       },
       {
         to: '/team',
         label: 'Our Team',
-        desc: 'Leadership & team profiles',
         icon: Users,
       },
     ],
@@ -106,13 +96,11 @@ const navLinks = [
       {
         to: '/blog',
         label: 'Blog',
-        desc: 'Engineering insights & guides',
         icon: Newspaper,
       },
       {
         to: '/news-and-events',
         label: 'News & Events',
-        desc: 'Updates, launches & stories',
         icon: Sparkles,
       },
     ],
@@ -261,37 +249,28 @@ export default function Navbar() {
               )}
               {item.dropdown && openDropdown === item.label && (
                 <div
-                  className="absolute top-full left-0 mt-3 w-[22rem] p-2 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200"
+                  className="absolute top-full left-0 mt-3 min-w-[16rem] overflow-hidden rounded-sm bg-white shadow-xl border border-slate-200"
                   onMouseEnter={() => openDropdownMenu(item.label)}
                   onMouseLeave={scheduleCloseDropdown}
                 >
                   {item.dropdown.map((d) => {
                     const Icon = d.icon
-                    const iconBg = d.iconBg ?? 'bg-gold/10 group-hover/item:bg-gold/20'
-                    const iconColor = d.iconColor ?? 'text-gold'
                     return (
                       <Link
                         key={d.label}
                         to={d.to}
-                        className="group/item flex items-start gap-3 rounded-xl px-3 py-2.5 text-slate-700 hover:bg-slate-50 transition-colors"
+                        className="group/item flex items-center gap-4 px-5 py-3.5 text-navy hover:bg-gold/10 transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
                         {Icon && (
-                          <span
-                            className={`mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-colors ${iconBg}`}
-                          >
-                            <Icon size={18} className={iconColor} />
-                          </span>
+                          <Icon
+                            size={22}
+                            strokeWidth={1.5}
+                            className="shrink-0 text-gold"
+                          />
                         )}
-                        <span className="min-w-0">
-                          <span className="block text-[0.95rem] font-semibold leading-5 text-navy group-hover/item:text-gold transition-colors">
-                            {d.label}
-                          </span>
-                          {d.desc && (
-                            <span className="block text-[0.82rem] text-slate-500 leading-snug mt-0.5">
-                              {d.desc}
-                            </span>
-                          )}
+                        <span className="text-[0.95rem] font-medium leading-5 whitespace-nowrap group-hover/item:text-gold transition-colors">
+                          {d.label}
                         </span>
                       </Link>
                     )

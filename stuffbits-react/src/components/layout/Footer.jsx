@@ -1,30 +1,22 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Linkedin, Mail, Phone, MessageCircle, MapPin, ExternalLink, Instagram, Facebook, Building2 } from 'lucide-react'
-const FooterMap = lazy(() => import('./FooterMap'))
+import { Mail, Phone, MapPin } from 'lucide-react'
+import { LinkedInIcon } from '../icons/BrandIcons'
+import {
+  EmbeddedHardwareIcon,
+  EmbeddedFirmwareIcon,
+  ProductionIcon,
+  SoftwareDevelopmentIcon,
+} from '../icons/ServiceIcons'
+import SocialIconLinks from '../SocialIconLinks'
 
-const SOCIAL_LINKS = [
-  {
-    href: 'https://www.linkedin.com/company/stuffbits-technosolutions-pvt-ltd',
-    label: 'LinkedIn',
-    icon: Linkedin,
-  },
-  {
-    href: 'https://www.instagram.com/_stuffbits_',
-    label: 'Instagram',
-    icon: Instagram,
-  },
-  {
-    href: 'https://www.facebook.com/stuffbits.technologies',
-    label: 'Facebook',
-    icon: Facebook,
-  },
-  {
-    href: 'https://wa.me/919860999078',
-    label: 'WhatsApp',
-    icon: MessageCircle,
-  },
+const FOOTER_SERVICES = [
+  { to: '/services/embedded-hardware', label: 'Embedded Hardware', icon: EmbeddedHardwareIcon },
+  { to: '/services/embedded-firmware', label: 'Embedded Firmware', icon: EmbeddedFirmwareIcon },
+  { to: '/services/component-assembly', label: 'Production', icon: ProductionIcon },
+  { to: '/services/it-development', label: 'Software Development', icon: SoftwareDevelopmentIcon },
 ]
+const FooterMap = lazy(() => import('./FooterMap'))
 
 export default function Footer() {
   const [shouldLoadMap, setShouldLoadMap] = useState(false)
@@ -61,20 +53,7 @@ export default function Footer() {
             <p className="text-slate-300 text-sm leading-relaxed mb-6">
               Embedded electronics solutions — hardware, firmware, PCB design, IoT, and digital services.
             </p>
-            <div className="flex gap-4">
-              {SOCIAL_LINKS.map(({ href, label, icon: _Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-200 transition-colors hover:border-gold hover:text-gold hover:bg-gold/5"
-                  aria-label={label}
-                >
-                  <_Icon size={18} />
-                </a>
-              ))}
-            </div>
+            <SocialIconLinks tone="dark" iconSize={18} />
           </div>
 
           {/* Quick Links */}
@@ -100,10 +79,14 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <h4 className="font-heading font-semibold text-white mb-5 text-sm uppercase tracking-wider">Our Services</h4>
             <ul className="space-y-3 text-slate-300 text-sm">
-              <li><Link to="/services/embedded-hardware" className="hover:text-gold transition-colors">Embedded Hardware</Link></li>
-              <li><Link to="/services/embedded-firmware" className="hover:text-gold transition-colors">Embedded Firmware</Link></li>
-              <li><Link to="/services/component-assembly" className="hover:text-gold transition-colors">Production</Link></li>
-              <li><Link to="/services/it-development" className="hover:text-gold transition-colors">Software Development</Link></li>
+              {FOOTER_SERVICES.map(({ to, label, icon: Icon }) => (
+                <li key={to}>
+                  <Link to={to} className="inline-flex items-center gap-2.5 hover:text-gold transition-colors">
+                    <Icon size={16} strokeWidth={1.75} className="text-gold/80 shrink-0" />
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -168,8 +151,8 @@ export default function Footer() {
             <Link to="/legal#cookies" className="hover:text-gold transition-colors">Cookie Policy</Link>
             <Link to="/legal#disclaimer" className="hover:text-gold transition-colors">Disclaimer</Link>
             <Link to="/legal#disclosures" className="hover:text-gold transition-colors">Statutory Disclosures</Link>
-            <a href="https://www.linkedin.com/company/stuffbits-technosolutions-pvt-ltd" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors inline-flex items-center gap-1">
-              LinkedIn <ExternalLink size={12} />
+            <a href="https://www.linkedin.com/company/stuffbits-technosolutions-pvt-ltd" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors inline-flex items-center gap-1.5">
+              <LinkedInIcon size={14} /> LinkedIn
             </a>
           </div>
         </div>

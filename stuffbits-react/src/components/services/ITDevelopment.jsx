@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Monitor, CheckCircle2, Globe } from 'lucide-react'
+import { CheckCircle2, Globe } from 'lucide-react'
+import { SoftwareDevelopmentIcon } from '../icons/ServiceIcons'
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -54,7 +55,7 @@ export default function ITDevelopment({ id = 'digital' }) {
           {/* Content */}
           <motion.div {...fadeUp}>
             <div className="w-11 h-11 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
-              <Monitor className="text-gold" size={22} />
+              <SoftwareDevelopmentIcon className="text-gold" size={22} />
             </div>
             <p className="text-slate-600 leading-relaxed mb-3 text-sm">
               <strong>What it is:</strong> Software Development covers the software layer beyond embedded firmware —

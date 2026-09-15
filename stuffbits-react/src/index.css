@@ -51,7 +51,7 @@
   }
 
   .sb-card {
-    @apply rounded-2xl bg-white border border-slate-200 shadow-sm transition-all duration-300;
+    @apply bg-white border border-slate-200 shadow-sm transition-all duration-300;
   }
 
   .sb-card-hover {
@@ -59,7 +59,7 @@
   }
 
   .sb-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2;
   }
 
   .sb-btn-primary {
@@ -124,11 +124,22 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: #d4af37;
-  border-radius: 999px;
+  border-radius: 0;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #e8c547;
+}
+
+/* Native controls (especially iOS) can round corners even without Tailwind */
+button,
+input,
+textarea,
+select,
+img,
+video,
+iframe {
+  border-radius: 0;
 }

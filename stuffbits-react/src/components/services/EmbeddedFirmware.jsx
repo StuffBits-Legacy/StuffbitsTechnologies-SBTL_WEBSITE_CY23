@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Code, CheckCircle2, Shield } from 'lucide-react'
+import { CheckCircle2, Shield } from 'lucide-react'
+import { EmbeddedFirmwareIcon } from '../icons/ServiceIcons'
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -47,7 +48,7 @@ export default function EmbeddedFirmware({ id = 'firmware' }) {
           {/* Content */}
           <motion.div {...fadeUp}>
             <div className="w-11 h-11 rounded-lg bg-gold/10 flex items-center justify-center mb-4">
-              <Code className="text-gold" size={22} />
+              <EmbeddedFirmwareIcon className="text-gold" size={22} />
             </div>
             <p className="text-slate-600 leading-relaxed mb-3 text-sm">
               <strong>What it is:</strong> Embedded firmware is the software that runs on your hardware — the

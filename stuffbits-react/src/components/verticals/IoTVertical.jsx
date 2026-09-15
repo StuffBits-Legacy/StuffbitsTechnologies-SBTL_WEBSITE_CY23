@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import {
-  Wifi,
   MapPin,
   Cloud,
   Smartphone,
@@ -9,6 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from 'lucide-react'
+import { IiotIcon } from '../icons/ServiceIcons'
 import { Link } from 'react-router-dom'
 import IoTHeroBackground from './IoTHeroBackground'
 
@@ -87,7 +87,7 @@ export default function IoTVertical() {
             className="flex items-center gap-3 mb-4"
           >
             <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-gold/20 text-gold text-sm font-medium">
-              <Wifi size={16} /> IIoT
+              <IiotIcon size={16} /> IIoT
             </span>
           </motion.div>
           <motion.h2

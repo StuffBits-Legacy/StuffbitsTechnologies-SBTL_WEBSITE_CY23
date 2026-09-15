@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from 'lucide-react'
+import { SoftwareDevelopmentIcon } from '../icons/ServiceIcons'
 import { Link } from 'react-router-dom'
 import DigitalServicesHeroBackground from './DigitalServicesHeroBackground'
 
@@ -80,7 +81,7 @@ export default function DigitalServicesVertical() {
             className="flex items-center gap-3 mb-4"
           >
             <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-gold/20 text-gold text-sm font-medium">
-              <Monitor size={16} /> Software Development
+              <SoftwareDevelopmentIcon size={16} /> Software Development
             </span>
           </motion.div>
           <motion.h2

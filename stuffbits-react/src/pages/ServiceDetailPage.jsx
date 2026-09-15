@@ -5,32 +5,43 @@ import EmbeddedHardware from '../components/services/EmbeddedHardware'
 import EmbeddedFirmware from '../components/services/EmbeddedFirmware'
 import ComponentAssembly from '../components/services/ComponentAssembly'
 import ITDevelopment from '../components/services/ITDevelopment'
+import {
+  EmbeddedHardwareIcon,
+  EmbeddedFirmwareIcon,
+  ProductionIcon,
+  SoftwareDevelopmentIcon,
+} from '../components/icons/ServiceIcons'
 
 const SERVICES = {
   'embedded-hardware': {
     title: 'Embedded Hardware',
+    icon: EmbeddedHardwareIcon,
     subtitle:
       'Custom hardware design with production-ready PCB layout — from system architecture and schematics to high-speed routing and DFM.',
     component: EmbeddedHardware,
   },
   'embedded-firmware': {
     title: 'Embedded Firmware',
+    icon: EmbeddedFirmwareIcon,
     subtitle: 'Real-time firmware development — bare-metal, RTOS, AUTOSAR — with MISRA-C and safety-critical expertise.',
     component: EmbeddedFirmware,
   },
   'pcb-layout': {
     title: 'Embedded Hardware',
+    icon: EmbeddedHardwareIcon,
     subtitle:
       'Custom hardware design with production-ready PCB layout — from system architecture and schematics to high-speed routing and DFM.',
     component: EmbeddedHardware,
   },
   'component-assembly': {
     title: 'Production',
+    icon: ProductionIcon,
     subtitle: 'Assembly, testing, and integration — from prototype builds to volume production support.',
     component: ComponentAssembly,
   },
   'it-development': {
     title: 'Software Development',
+    icon: SoftwareDevelopmentIcon,
     subtitle: 'Companion websites and mobile apps for your embedded system — plus backends, dashboards, and ongoing maintenance.',
     component: ITDevelopment,
   },
@@ -45,6 +56,7 @@ export default function ServiceDetailPage() {
   }
 
   const ServiceComponent = service.component
+  const ServiceIcon = service.icon
 
   return (
     <div className="pb-0">
@@ -68,8 +80,13 @@ export default function ServiceDetailPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-heading font-bold text-white mb-3"
+            className="text-3xl md:text-4xl font-heading font-bold text-white mb-3 flex items-center gap-3"
           >
+            {ServiceIcon && (
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gold/15">
+                <ServiceIcon size={22} strokeWidth={1.75} className="text-gold" />
+              </span>
+            )}
             {service.title}
           </motion.h1>
           <motion.p
