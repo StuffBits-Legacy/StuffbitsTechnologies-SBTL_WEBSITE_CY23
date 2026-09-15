@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Linkedin, Mail, Phone, MessageCircle, MapPin, ExternalLink, Instagram, Facebook } from 'lucide-react'
+import { Linkedin, Mail, Phone, MessageCircle, MapPin, ExternalLink, Instagram, Facebook, Building2 } from 'lucide-react'
 const FooterMap = lazy(() => import('./FooterMap'))
 
 const SOCIAL_LINKS = [
@@ -49,9 +49,9 @@ export default function Footer() {
     <footer className="bg-navy text-white">
       <div className="h-1 bg-gold" />
       <div className="max-w-container mx-auto px-6 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-3">
             <Link
               to="/"
               className="inline-flex items-center justify-center rounded-md bg-white/100 border border-slate-700 px-3 py-2 mb-5"
@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="lg:col-span-3">
             <h4 className="font-heading font-semibold text-white mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-slate-300 text-sm">
               <li><Link to="/" className="hover:text-gold transition-colors">Home</Link></li>
@@ -97,7 +97,7 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div>
+          <div className="lg:col-span-2">
             <h4 className="font-heading font-semibold text-white mb-5 text-sm uppercase tracking-wider">Our Services</h4>
             <ul className="space-y-3 text-slate-300 text-sm">
               <li><Link to="/services/embedded-hardware" className="hover:text-gold transition-colors">Embedded Hardware</Link></li>
@@ -108,16 +108,22 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="lg:col-span-4">
             <h4 className="font-heading font-semibold text-white mb-5 text-sm uppercase tracking-wider">Get in Touch</h4>
             <address className="text-slate-300 text-sm not-italic leading-relaxed space-y-4">
               <p className="flex gap-3">
-                <MapPin size={18} className="flex-shrink-0 mt-0.5 text-gold/80" />
-                <span>Hadapsar, Pune-411028, Maharashtra</span>
+                <MapPin size={18} className="flex-shrink-0 mt-0.5 text-gold/80" aria-hidden />
+                <span>
+                  <span className="block text-gold text-xs font-semibold uppercase tracking-wider mb-1">Office</span>
+                  2nd Floor, Mahadik House, Opposite Pragati Driving School, Near Bhosale Garden, Hadapsar, Pune, Maharashtra – 411028
+                </span>
               </p>
               {/* <p className="flex gap-3">
-                <MapPin size={18} className="flex-shrink-0 mt-0.5 text-gold/80" />
-                <span>WeWork Eleven West, Pancard Club Rd, Baner Gaon, Baner, Pune, Maharashtra 411069</span>
+                <Building2 size={18} className="flex-shrink-0 mt-0.5 text-gold/80" aria-hidden />
+                <span>
+                  <span className="block text-gold text-xs font-semibold uppercase tracking-wider mb-1">Registered Office</span>
+                  S. No. 30/2/1, Flat No. B1101, Krishnas Blessing, Pune-Solapur Road, Pune, Maharashtra – 412307
+                </span>
               </p> */}
               <p>
                 <a href="tel:+919860999078" className="flex items-center gap-3 hover:text-gold transition-colors group">
