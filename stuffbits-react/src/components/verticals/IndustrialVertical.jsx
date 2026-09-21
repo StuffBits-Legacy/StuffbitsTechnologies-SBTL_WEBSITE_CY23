@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import {
-  Factory,
   Cpu,
   Gauge,
   Network,
@@ -9,6 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from 'lucide-react'
+import { IndustrialIcon } from '../icons/ServiceIcons'
 import { Link } from 'react-router-dom'
 import IndustrialHeroBackground from './IndustrialHeroBackground'
 
@@ -87,7 +87,7 @@ export default function IndustrialVertical() {
             className="flex items-center gap-3 mb-4"
           >
             <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-gold/20 text-gold text-sm font-medium">
-              <Factory size={16} /> Industrial
+              <IndustrialIcon size={16} /> Industrial
             </span>
           </motion.div>
           <motion.h2

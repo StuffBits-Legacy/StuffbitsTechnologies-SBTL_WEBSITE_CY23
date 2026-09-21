@@ -1,29 +1,35 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Cpu, Code, Package, Monitor, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import {
+  EmbeddedHardwareIcon,
+  EmbeddedFirmwareIcon,
+  ProductionIcon,
+  SoftwareDevelopmentIcon,
+} from '../icons/ServiceIcons'
 
 const SERVICES = [
   {
-    icon: Cpu,
+    icon: EmbeddedHardwareIcon,
     title: 'Embedded Hardware',
     description:
       'Custom hardware design plus production-ready PCB layout — schematics, routing, high-speed considerations, and DFM.',
     link: '/services/embedded-hardware',
   },
   {
-    icon: Code,
+    icon: EmbeddedFirmwareIcon,
     title: 'Embedded Firmware',
     description: 'Real-time firmware development — bare-metal, RTOS, AUTOSAR — with MISRA-C and safety-critical expertise.',
     link: '/services/embedded-firmware',
   },
   {
-    icon: Package,
+    icon: ProductionIcon,
     title: 'Production',
     description: 'Assembly, testing, and integration — from prototype builds to volume production support.',
     link: '/services/component-assembly',
   },
   {
-    icon: Monitor,
+    icon: SoftwareDevelopmentIcon,
     title: 'Software Development',
     description: 'Websites and mobile apps that pair with your embedded product — plus backends, dashboards, and maintenance.',
     link: '/services/it-development',

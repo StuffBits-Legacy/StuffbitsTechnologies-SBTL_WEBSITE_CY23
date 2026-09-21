@@ -25,7 +25,8 @@ const CLIENT_LOGOS = [
   { src: `${STUFFBITS_CLIENTS_BASE}/18.png`, name: 'Dwarpaal' },
   { src: `${STUFFBITS_CLIENTS_BASE}/19.png`, name: 'Encardio Rite' },
   { src: `${STUFFBITS_CLIENTS_BASE}/20.png`, name: 'Yelsons India Private Limited' },
-  { src: '/images/clients/UrjaNXT_Logo_Login.png', name: 'UrjaNxt Technology' },
+  { src: '/images/clients/UrjaNXT_Logo_Login.png', name: 'UrjaNxt Technology', small: true },
+  { src: '/images/clients/repos-energy.png', name: 'Repos Energy', wide: true, small: true },
 ]
 
 export default function ClientsTrusted() {
@@ -74,7 +75,15 @@ export default function ClientsTrusted() {
               {duplicatedLogos.map((client, i) => (
                 <div
                   key={`${client.name}-${i}`}
-                  className="relative flex items-center justify-center w-40 h-20 md:w-48 md:h-24 shrink-0 transition-all duration-300 group"
+                  className={`relative flex items-center justify-center h-20 md:h-24 shrink-0 transition-all duration-300 group ${
+                    client.small
+                      ? client.wide
+                        ? 'w-36 md:w-44'
+                        : 'w-28 md:w-32'
+                      : client.wide
+                        ? 'w-56 md:w-72'
+                        : 'w-40 md:w-48'
+                  }`}
                   onMouseEnter={() => setHoveredIndex(i)}
                   onMouseLeave={() => setHoveredIndex(null)}
                   title={client.name}
@@ -82,7 +91,7 @@ export default function ClientsTrusted() {
                   <img
                     src={client.src}
                     alt={client.name}
-                    className="max-h-14 md:max-h-20 w-auto object-contain"
+                    className={`${client.small ? 'max-h-8 md:max-h-10' : 'max-h-14 md:max-h-20'} max-w-full w-auto object-contain`}
                     onError={(e) => {
                       e.target.onerror = null
                       e.target.src = getFallbackSrc(client)

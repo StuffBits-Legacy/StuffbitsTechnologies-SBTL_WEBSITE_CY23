@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Car, Factory, Wifi, Monitor, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import {
+  AutomotiveIcon,
+  IndustrialIcon,
+  IiotIcon,
+  SoftwareDevelopmentIcon,
+} from '../components/icons/ServiceIcons'
 
 const VERTICALS = [
   {
     slug: 'automotive',
-    icon: Car,
+    icon: AutomotiveIcon,
     title: 'Automotive',
     description:
       'ECU development, AUTOSAR, EV electronics, diagnostics, and connected vehicle solutions for OEMs and Tier-1 suppliers.',
@@ -15,7 +21,7 @@ const VERTICALS = [
   },
   {
     slug: 'industrial',
-    icon: Factory,
+    icon: IndustrialIcon,
     title: 'Industrial',
     description:
       'Process measurement, instrumentation, and smart manufacturing. Rugged embedded systems for harsh industrial environments.',
@@ -25,7 +31,7 @@ const VERTICALS = [
   },
   {
     slug: 'iot',
-    icon: Wifi,
+    icon: IiotIcon,
     title: 'IIOT',
     description:
       'IIOT solutions for industrial automation, process control, and IoT-based systems.',
@@ -35,7 +41,7 @@ const VERTICALS = [
   },
   {
     slug: 'digital-services',
-    icon: Monitor,
+    icon: SoftwareDevelopmentIcon,
     title: 'Software Development',
     description:
       'Websites, mobile apps, and ongoing maintenance — full-stack digital solutions that pair with your embedded products.',

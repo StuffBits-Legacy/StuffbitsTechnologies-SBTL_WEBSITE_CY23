@@ -1,32 +1,38 @@
 import { Link } from 'react-router-dom'
 import { motion as Motion } from 'framer-motion'
-import { Cpu, Code, Package, Monitor, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import TechStackByService from '../components/home/TechStackByService'
+import {
+  EmbeddedHardwareIcon,
+  EmbeddedFirmwareIcon,
+  ProductionIcon,
+  SoftwareDevelopmentIcon,
+} from '../components/icons/ServiceIcons'
 
 const SERVICES = [
   {
     slug: 'embedded-hardware',
     label: 'Embedded Hardware',
-    icon: Cpu,
+    icon: EmbeddedHardwareIcon,
     description:
       'Custom hardware design plus production-ready PCB layout — schematics, routing, high-speed considerations, and DFM.',
   },
   {
     slug: 'embedded-firmware',
     label: 'Embedded Firmware',
-    icon: Code,
+    icon: EmbeddedFirmwareIcon,
     description: 'Real-time firmware development — bare-metal, RTOS, AUTOSAR — with MISRA-C and safety-critical expertise.',
   },
   {
     slug: 'component-assembly',
     label: 'Production',
-    icon: Package,
+    icon: ProductionIcon,
     description: 'Assembly, testing, and integration — from prototype builds to volume production support.',
   },
   {
     slug: 'it-development',
     label: 'Software Development',
-    icon: Monitor,
+    icon: SoftwareDevelopmentIcon,
     description: 'Companion websites and mobile apps for your embedded system — plus backends, dashboards, and maintenance.',
   },
 ]

@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Linkedin, ExternalLink } from 'lucide-react'
+import { X, ExternalLink } from 'lucide-react'
+import { LinkedInIcon } from '../icons/BrandIcons'
 import { Link } from 'react-router-dom'
 
 /**
@@ -147,7 +148,7 @@ export default function EventStoryModal({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-[#0A66C2] text-[#0A66C2] font-semibold hover:bg-[#0A66C2] hover:text-white transition-colors"
                   >
-                    <Linkedin size={20} />
+                    <LinkedInIcon size={20} />
                     Open original post
                   </a>
                 )}

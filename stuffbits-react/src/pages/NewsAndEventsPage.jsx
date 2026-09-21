@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Sparkles, Newspaper, ArrowRight, Linkedin, Mail } from 'lucide-react'
+import { Sparkles, Newspaper, ArrowRight, Mail } from 'lucide-react'
+import { LinkedInIcon } from '../components/icons/BrandIcons'
 import StuffBitsEventCards from '../components/events/StuffBitsEventCards'
 import LinkedInEventsSection from '../components/events/LinkedInEventsSection'
 import { COMPANY_NEWS, LINKEDIN_COMPANY_URL } from '../lib/eventsNewsData'
@@ -180,7 +181,7 @@ export default function NewsAndEventsPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-3 border-2 border-slate-500 text-slate-200 font-semibold rounded-lg hover:border-gold hover:text-gold transition-colors"
             >
-              <Linkedin size={18} />
+              <LinkedInIcon size={18} />
               LinkedIn
             </a>
           </motion.div>

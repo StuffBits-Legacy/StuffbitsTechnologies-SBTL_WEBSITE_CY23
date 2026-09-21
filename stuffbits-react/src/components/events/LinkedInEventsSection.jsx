@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Linkedin } from 'lucide-react'
+import { LinkedInIcon } from '../icons/BrandIcons'
 import { LINKEDIN_POST_EMBEDS, LINKEDIN_COMPANY_URL } from '../../lib/eventsNewsData'
 
 const FEED_IFRAME_SRC = import.meta.env.VITE_LINKEDIN_EVENTS_FEED_IFRAME_SRC?.trim() || ''
@@ -73,7 +73,7 @@ export default function LinkedInEventsSection() {
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 300, delay: 0.1 }}
             >
-              <Linkedin className="text-[#0A66C2]" size={36} aria-hidden />
+              <LinkedInIcon className="text-[#0A66C2]" size={36} />
             </motion.div>
             <div>
               <h2 className="text-2xl md:text-4xl font-heading font-bold text-navy tracking-tight">
@@ -92,7 +92,7 @@ export default function LinkedInEventsSection() {
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-2 px-6 py-3 bg-[#0A66C2] text-white font-semibold rounded-xl shadow-lg shadow-[#0A66C2]/25 hover:bg-[#004182] transition-colors shrink-0"
           >
-            <Linkedin size={22} />
+            <LinkedInIcon size={22} />
             Follow StuffBits
           </motion.a>
         </motion.div>
@@ -136,7 +136,7 @@ export default function LinkedInEventsSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white font-semibold rounded-lg"
             >
-              <Linkedin size={22} />
+              <LinkedInIcon size={22} />
               StuffBits on LinkedIn
             </a>
           </div>

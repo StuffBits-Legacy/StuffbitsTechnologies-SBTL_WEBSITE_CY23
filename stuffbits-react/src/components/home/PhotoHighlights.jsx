@@ -16,6 +16,8 @@ export default function PhotoHighlights({ className = '' }) {
 
   const items = useMemo(() => {
     const filenames = [
+      'team-celebration-1.jpg',
+      'team-celebration-2.jpg',
       'IMG_5874.JPG',
       'IMG_5877.JPG',
       'IMG_5881.JPG',
@@ -51,8 +53,8 @@ export default function PhotoHighlights({ className = '' }) {
       if (i === 0) {
         return {
           ...base,
-          title: 'Automation Expo 2025 — team moments',
-          subtitle: 'A glimpse of our presence, demos, and customer conversations at the expo.',
+          title: 'Team celebration at the office',
+          subtitle: 'StuffBits team moments from our latest office gathering.',
           ctaLabel: 'View gallery',
           href: '/about',
         }

@@ -1,33 +1,38 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Car, Factory, Wifi, Monitor, ArrowRight, PillIcon } from 'lucide-react'
+import { ArrowRight, Pill } from 'lucide-react'
+import {
+  AutomotiveIcon,
+  IndustrialIcon,
+  SoftwareDevelopmentIcon,
+} from '../icons/ServiceIcons'
 
 const VERTICALS = [
   {
     id: 'automotive',
-    icon: Car,
+    icon: AutomotiveIcon,
     title: 'Automotive',
     description: 'On-road, off-road, testing, and AUTOSAR solutions. We deliver embedded systems for ECUs, instrumentation, and connected vehicle applications.',
     highlights: ['ECU Development', 'AUTOSAR', 'EV Electronics', 'Diagnostics'],
   },
   {
     id: 'industrial and IIOT',
-    icon: Factory,
+    icon: IndustrialIcon,
     title: 'Industrial and IIOT',
     description: 'Process measurement, instrumentation, and smart manufacturing. Rugged embedded systems for harsh industrial environments. IIOT solutions for industrial automation, process control, and IoT-based systems.',
     highlights: ['Industrial IoT', 'Process Control', 'Instrumentation', 'Industry 4.0', 'IIOT Solutions', 'Industrial Automation', 'IoT-Based Systems'],
   },
   {
     id: 'Pharmaceutical',
-    icon: PillIcon,
+    icon: Pill,
     title: 'Pharmaceutical',
     description: 'Pharmaceutical solutions for the healthcare industry. We deliver embedded systems for pharmaceutical instrumentation, process control, and IoT-based systems.',
     highlights: ['Pharmaceutical Instrumentation', 'Process Control', 'IoT-Based Systems', 'Pharmaceutical Automation'],
   },
   {
     id: 'digital',
-    icon: Monitor,
+    icon: SoftwareDevelopmentIcon,
     title: 'Software Development',
     description: 'We deliver end-to-end software solutions including websites, mobile apps, desktop applications, and IoT-based systems. If your embedded product needs a companion website or app, we build that too — with full-stack development, ongoing maintenance, and support.',
     highlights: ['Web & App Development',  'Desktop Applications', 'IOT-Based Applications','Maintenance & Support'],

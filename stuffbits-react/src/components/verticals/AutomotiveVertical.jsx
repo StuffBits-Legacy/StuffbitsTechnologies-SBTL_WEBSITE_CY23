@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import {
-  Car,
   Cpu,
   Shield,
   Zap,
@@ -9,6 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from 'lucide-react'
+import { AutomotiveIcon } from '../icons/ServiceIcons'
 import { Link } from 'react-router-dom'
 import AutomotiveHeroBackground from './AutomotiveHeroBackground'
 
@@ -85,7 +85,7 @@ export default function AutomotiveVertical() {
             className="flex items-center gap-3 mb-4"
           >
             <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-gold/20 text-gold text-sm font-medium">
-              <Car size={16} /> Automotive
+              <AutomotiveIcon size={16} /> Automotive
             </span>
           </motion.div>
           <motion.h2
