@@ -1,7 +1,9 @@
-import { Link, useParams, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useParams, useLocation, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { LayoutDashboard, ArrowRight } from 'lucide-react'
 import AutomotiveVertical from '../components/verticals/AutomotiveVertical'
+import BootloaderPage from '../components/verticals/BootloaderPage'
 import IndustrialVertical from '../components/verticals/IndustrialVertical'
 import IoTVertical from '../components/verticals/IoTVertical'
 import DigitalServicesVertical from '../components/verticals/DigitalServicesVertical'
@@ -35,7 +37,18 @@ const VERTICALS = {
 
 export default function VerticalDetailPage() {
   const { slug } = useParams()
+  const { hash } = useLocation()
   const vertical = slug ? VERTICALS[slug] : null
+  const bootloaderView = slug === 'automotive' && hash.startsWith('#bootloader')
+
+  useEffect(() => {
+    if (hash !== '#bootloader') return
+    const root = document.documentElement
+    const previous = root.style.scrollBehavior
+    root.style.scrollBehavior = 'auto'
+    window.scrollTo(0, 0)
+    root.style.scrollBehavior = previous
+  }, [hash])
 
   if (!vertical) {
     return <Navigate to="/verticals" replace />
@@ -46,7 +59,7 @@ export default function VerticalDetailPage() {
   return (
     <div className="pb-0">
       {/* Breadcrumb only when we have dedicated content (e.g. Automotive) */}
-      {VerticalComponent && (
+      {VerticalComponent && !bootloaderView && (
         <section className="bg-navy py-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-transparent pointer-events-none" />
           <div className="max-w-container mx-auto px-6 relative">
@@ -64,13 +77,25 @@ export default function VerticalDetailPage() {
                 Verticals
               </Link>
               <span className="mx-2">/</span>
-              <span className="text-gold">{vertical.title}</span>
+              {bootloaderView ? (
+                <>
+                  <Link to="/verticals/automotive" className="hover:text-gold transition-colors">
+                    Automotive
+                  </Link>
+                  <span className="mx-2">/</span>
+                  <span className="text-gold">Bootloader</span>
+                </>
+              ) : (
+                <span className="text-gold">{vertical.title}</span>
+              )}
             </motion.nav>
           </div>
         </section>
       )}
 
-      {VerticalComponent ? (
+      {bootloaderView ? (
+        <BootloaderPage />
+      ) : VerticalComponent ? (
         <VerticalComponent />
       ) : (
         <>

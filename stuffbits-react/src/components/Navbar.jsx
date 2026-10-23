@@ -97,6 +97,11 @@ const industryPanels = [
 
 const navLinks = [
   {
+    label: 'Industries',
+    to: '/verticals',
+    mega: industryPanels,
+  },
+  {
     label: 'Services',
     to: '/services',
     dropdown: [
@@ -105,11 +110,6 @@ const navLinks = [
       { to: '/services/component-assembly', label: 'Production' },
       { to: '/services/it-development', label: 'Software Development' },
     ],
-  },
-  {
-    label: 'Industries',
-    to: '/verticals',
-    mega: industryPanels,
   },
   { to: '/products', label: 'Products' },
   {
@@ -135,38 +135,94 @@ const linkClass = (active, light) =>
   }`
 
 const megaRowClass = (active) =>
-  `block border-b border-slate-200 px-5 py-3.5 text-[15px] font-medium leading-snug last:border-b-0 ${
+  `flex h-[42px] items-center border-b border-slate-200 px-3.5 text-[13px] font-medium leading-snug last:border-b-0 ${
     active ? 'text-gold' : 'text-slate-800 hover:text-gold'
   }`
 
-function defaultMegaSelection(pathname) {
+function linkSlug(to) {
+  const hashIndex = to.indexOf('#')
+  return hashIndex >= 0 ? to.slice(hashIndex + 1) : ''
+}
+
+function selectionFromLocation(pathname, hash) {
+  const slug = (hash || '').replace(/^#/, '')
   const industry = industryPanels.findIndex(
     (panel) => pathname === panel.to || pathname.startsWith(`${panel.to}/`)
   )
-  const index = industry >= 0 ? industry : 0
-  const firstItem = industryPanels[index]?.groups?.[0]?.items?.[0]
-  return {
-    industry: index,
-    group: industryPanels[index]?.groups ? 0 : null,
-    item: firstItem?.children?.length ? 0 : null,
+  if (industry < 0) return { industry: null, group: null, item: null }
+
+  const groups = industryPanels[industry].groups
+  if (!groups || !slug) return { industry, group: null, item: null }
+
+  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+    const group = groups[groupIndex]
+    if (linkSlug(group.to) === slug) return { industry, group: groupIndex, item: null }
+    const items = group.items ?? []
+    for (let itemIndex = 0; itemIndex < items.length; itemIndex += 1) {
+      const item = items[itemIndex]
+      const onChild = (item.children ?? []).some((child) => linkSlug(child.to) === slug)
+      if (linkSlug(item.to) === slug || onChild) return { industry, group: groupIndex, item: itemIndex }
+    }
   }
+
+  return { industry, group: null, item: null }
 }
 
-function MegaColumn({ children, wide }) {
+function mobileOpenKeys(pathname, hash) {
+  const keys = new Set()
+  const slug = (hash || '').replace(/^#/, '')
+  const selection = selectionFromLocation(pathname, hash)
+  if (selection.industry == null) return keys
+
+  const panel = industryPanels[selection.industry]
+  keys.add(`ind:${panel.label}`)
+  if (selection.group == null) return keys
+
+  const group = panel.groups[selection.group]
+  keys.add(`grp:${panel.label}:${group.label}`)
+  if (selection.item == null) return keys
+
+  const item = group.items[selection.item]
+  const onItem = linkSlug(item.to) === slug || (item.children ?? []).some((child) => linkSlug(child.to) === slug)
+  if (onItem) keys.add(`itm:${panel.label}:${item.label}`)
+  return keys
+}
+
+function MegaColumn({ wide, children }) {
   return (
-    <div className={`-ml-px flex ${wide ? 'w-[17rem]' : 'w-56'} flex-col self-start border border-slate-200 bg-white shadow-[0_12px_40px_rgba(15,23,42,0.08)] first:ml-0`}>
+    <div
+      className={`-ml-px flex flex-col self-start border border-slate-200 bg-white shadow-[0_12px_40px_rgba(15,23,42,0.08)] first:ml-0 ${
+        wide ? 'w-[14.25rem]' : 'w-48'
+      }`}
+    >
       {children}
     </div>
   )
 }
 
-function IndustryMegaPanel({ selection, setSelection, onNavigate }) {
+function IndustryMegaPanel({ selection, setSelection, pinned, activeSlug, onNavigate }) {
   const industry = industryPanels[selection.industry]
   const groups = industry?.groups ?? []
   const group = selection.group != null ? groups[selection.group] : null
   const items = group?.items ?? []
   const entry = selection.item != null ? items[selection.item] : null
   const children = entry?.children ?? []
+
+  const selectIndustry = (index) => {
+    setSelection((current) => {
+      if (current.industry === index) return current
+      if (pinned.industry === index) return pinned
+      return { industry: index, group: null, item: null }
+    })
+  }
+
+  const selectGroup = (index) => {
+    setSelection((current) => ({
+      ...current,
+      group: index,
+      item: current.group === index ? current.item : null,
+    }))
+  }
 
   return (
     <div className="flex w-max items-start">
@@ -176,28 +232,8 @@ function IndustryMegaPanel({ selection, setSelection, onNavigate }) {
             key={panel.label}
             to={panel.to}
             className={megaRowClass(selection.industry === index)}
-            onMouseEnter={() => {
-              setSelection((current) => {
-                if (current.industry === index) return current
-                const first = panel.groups?.[0]?.items?.[0]
-                return {
-                  industry: index,
-                  group: panel.groups ? 0 : null,
-                  item: first?.children?.length ? 0 : null,
-                }
-              })
-            }}
-            onFocus={() => {
-              setSelection((current) => {
-                if (current.industry === index) return current
-                const first = panel.groups?.[0]?.items?.[0]
-                return {
-                  industry: index,
-                  group: panel.groups ? 0 : null,
-                  item: first?.children?.length ? 0 : null,
-                }
-              })
-            }}
+            onMouseEnter={() => selectIndustry(index)}
+            onFocus={() => selectIndustry(index)}
             onClick={onNavigate}
           >
             {panel.label}
@@ -212,20 +248,8 @@ function IndustryMegaPanel({ selection, setSelection, onNavigate }) {
               key={entryGroup.label}
               to={entryGroup.to}
               className={megaRowClass(selection.group === index)}
-              onMouseEnter={() =>
-                setSelection((current) => ({
-                  ...current,
-                  group: index,
-                  item: current.group === index ? current.item : null,
-                }))
-              }
-              onFocus={() =>
-                setSelection((current) => ({
-                  ...current,
-                  group: index,
-                  item: current.group === index ? current.item : null,
-                }))
-              }
+              onMouseEnter={() => selectGroup(index)}
+              onFocus={() => selectGroup(index)}
               onClick={onNavigate}
             >
               {entryGroup.label}
@@ -254,7 +278,12 @@ function IndustryMegaPanel({ selection, setSelection, onNavigate }) {
       {children.length > 0 && (
         <MegaColumn wide>
           {children.map((child) => (
-            <Link key={child.label} to={child.to} className={megaRowClass(false)} onClick={onNavigate}>
+            <Link
+              key={child.label}
+              to={child.to}
+              className={megaRowClass(activeSlug === linkSlug(child.to))}
+              onClick={onNavigate}
+            >
               {child.label}
             </Link>
           ))}
@@ -300,8 +329,18 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
   const [overHero, setOverHero] = useState(isOverHero)
-  const [mega, setMega] = useState(() => defaultMegaSelection('/'))
-  const [mobileNodes, setMobileNodes] = useState(() => new Set())
+  const [mega, setMega] = useState(() =>
+    selectionFromLocation(
+      typeof window !== 'undefined' ? window.location.pathname : '/',
+      typeof window !== 'undefined' ? window.location.hash : ''
+    )
+  )
+  const [mobileNodes, setMobileNodes] = useState(() =>
+    mobileOpenKeys(
+      typeof window !== 'undefined' ? window.location.pathname : '/',
+      typeof window !== 'undefined' ? window.location.hash : ''
+    )
+  )
   const closeDropdownTimerRef = useRef(null)
   const location = useLocation()
 
@@ -327,7 +366,7 @@ export default function Navbar() {
       closeDropdownTimerRef.current = null
     }
     if (label === 'Industries' && openDropdown !== 'Industries') {
-      setMega(defaultMegaSelection(location.pathname))
+      setMega(selectionFromLocation(location.pathname, location.hash))
     }
     setOpenDropdown(label)
   }
@@ -356,7 +395,8 @@ export default function Navbar() {
   useEffect(() => {
     setMobileOpen(false)
     setOpenDropdown(null)
-    setMobileNodes(new Set())
+    setMega(selectionFromLocation(location.pathname, location.hash))
+    setMobileNodes(mobileOpenKeys(location.pathname, location.hash))
   }, [location.pathname, location.hash])
 
   useEffect(() => {
@@ -443,9 +483,25 @@ export default function Navbar() {
                   </NavLink>
                 )}
 
+                {item.mega && openDropdown === item.label && (
+                  <div
+                    className="absolute top-full left-0 z-50"
+                    onMouseEnter={() => openDropdownMenu(item.label)}
+                    onMouseLeave={scheduleCloseDropdown}
+                  >
+                    <IndustryMegaPanel
+                      selection={mega}
+                      setSelection={setMega}
+                      pinned={selectionFromLocation(location.pathname, location.hash)}
+                      activeSlug={(location.hash || '').replace(/^#/, '')}
+                      onNavigate={closeMenus}
+                    />
+                  </div>
+                )}
+
                 {item.dropdown && openDropdown === item.label && (
                   <div
-                    className="absolute left-0 top-full z-50 min-w-[18rem] border border-slate-200 bg-white py-1.5"
+                    className="absolute left-0 top-full z-50 min-w-[14.25rem] border border-slate-200 bg-white"
                     onMouseEnter={() => openDropdownMenu(item.label)}
                     onMouseLeave={scheduleCloseDropdown}
                   >
@@ -453,7 +509,7 @@ export default function Navbar() {
                       <div key={d.to}>
                         <Link
                           to={d.to}
-                          className={`block px-5 py-3.5 text-[15px] font-medium leading-snug ${
+                          className={`flex h-[42px] items-center px-3.5 text-[13px] font-medium leading-snug ${
                             location.pathname === d.to
                               ? 'text-gold'
                               : 'text-slate-800 hover:text-gold'
@@ -471,16 +527,6 @@ export default function Navbar() {
             )
           })}
         </ul>
-
-        {openDropdown === 'Industries' && (
-          <div
-            className="absolute top-full left-1/2 z-50 -mt-1 hidden w-[62rem] max-w-[calc(100vw-2.5rem)] -translate-x-1/2 pt-1 lg:block"
-            onMouseEnter={() => openDropdownMenu('Industries')}
-            onMouseLeave={scheduleCloseDropdown}
-          >
-            <IndustryMegaPanel selection={mega} setSelection={setMega} onNavigate={closeMenus} />
-          </div>
-        )}
 
         <button
           type="button"
