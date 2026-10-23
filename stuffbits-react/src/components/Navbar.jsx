@@ -17,14 +17,17 @@ const navLinks = [
     label: 'Industries',
     to: '/verticals',
     dropdown: [
-      { to: '/verticals/automotive', label: 'Automotive' },
+      {
+        to: '/verticals/automotive',
+        label: 'Automotive',
+      },
       { to: '/verticals/industrial', label: 'Industrial' },
       { to: '/verticals/iot', label: 'IIoT' },
       { to: '/verticals/digital-services', label: 'Software Development' },
     ],
   },
   { to: '/products', label: 'Products' },
-  { to: '/portfolio', label: 'Work' },
+  // { to: '/portfolio', label: 'Work' },
   {
     label: 'Company',
     dropdown: [
@@ -125,7 +128,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 h-14 border-b transition-colors duration-300 ${
         onHero
-          ? 'border-white/20 bg-white/30 backdrop-blur-sm'
+          ? 'border-transparent bg-white/30 backdrop-blur-sm'
           : 'border-slate-200 bg-white'
       }`}
     >

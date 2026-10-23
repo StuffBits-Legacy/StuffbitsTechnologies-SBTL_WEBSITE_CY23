@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Pill } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import {
   AutomotiveIcon,
   IndustrialIcon,
+  IiotIcon,
   SoftwareDevelopmentIcon,
 } from '../icons/ServiceIcons'
 
@@ -17,18 +18,18 @@ const VERTICALS = [
     highlights: ['ECU Development', 'AUTOSAR', 'EV Electronics', 'Diagnostics'],
   },
   {
-    id: 'industrial and IIOT',
+    id: 'industrial',
     icon: IndustrialIcon,
-    title: 'Industrial and IIOT',
-    description: 'Process measurement, instrumentation, and smart manufacturing. Rugged embedded systems for harsh industrial environments. IIOT solutions for industrial automation, process control, and IoT-based systems.',
-    highlights: ['Industrial IoT', 'Process Control', 'Instrumentation', 'Industry 4.0', 'IIOT Solutions', 'Industrial Automation', 'IoT-Based Systems'],
+    title: 'Industrial',
+    description: 'Process measurement, instrumentation, and smart manufacturing. Rugged embedded systems for harsh industrial environments.',
+    highlights: ['Industrial IoT', 'Process Control', 'Instrumentation', 'Industry 4.0'],
   },
   {
-    id: 'Pharmaceutical',
-    icon: Pill,
-    title: 'Pharmaceutical',
-    description: 'Pharmaceutical solutions for the healthcare industry. We deliver embedded systems for pharmaceutical instrumentation, process control, and IoT-based systems.',
-    highlights: ['Pharmaceutical Instrumentation', 'Process Control', 'IoT-Based Systems', 'Pharmaceutical Automation'],
+    id: 'iiot',
+    icon: IiotIcon,
+    title: 'IIoT',
+    description: 'IIoT solutions for industrial automation, process control, and IoT-based systems.',
+    highlights: ['IIoT Solutions', 'Industrial Automation', 'Process Control', 'IoT-Based Systems'],
   },
   {
     id: 'digital',
@@ -57,7 +58,7 @@ export default function IndustryVerticals() {
             Industries We Serve
           </h2>
           <p className="text-slate-300 max-w-2xl mx-auto">
-            Embedded and digital solutions across Automotive, Industrial and IIOT, Pharmaceutical, and Software Development.
+            Embedded and digital solutions across Automotive, Industrial, IIoT, and Software Development.
           </p>
         </motion.div>
 

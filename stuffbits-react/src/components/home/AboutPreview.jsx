@@ -25,7 +25,7 @@ export default function AboutPreview() {
               Great products are built on great engineering. That's where StuffBits comes in.
             </p>
             <p className="sb-lead mb-6">
-              We are an embedded electronics engineering firm with a proven track record across Automotive, Industrial, Pharmaceutical, and IoT sectors. From PCB design and firmware development to protocol integration and connected device deployment — we deliver the full embedded stack, so you can focus on your product, not the complexity behind it.
+              We are an embedded electronics engineering firm with a proven track record across Automotive, Industrial, and IIoT sectors. From PCB design and firmware development to protocol integration and connected device deployment — we deliver the full embedded stack, so you can focus on your product, not the complexity behind it.
             </p>
             <p className="sb-lead mb-8">
               Whether you are validating a prototype or scaling to production, StuffBits brings deep technical expertise, structured delivery, and a commitment to production-grade quality that moves your project forward — on time and to specification.
