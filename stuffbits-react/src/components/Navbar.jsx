@@ -48,12 +48,18 @@ const linkClass = (active) =>
       : 'text-slate-800 hover:text-gold'
   }`
 
+/** Fraction of viewport height; navbar leaves hero styling below this scroll position. */
+const HERO_OVERLAY_THRESHOLD = 0.85
+
+const isOverHero = () =>
+  typeof window !== 'undefined' &&
+  window.location.pathname === '/' &&
+  window.scrollY < window.innerHeight * HERO_OVERLAY_THRESHOLD
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
-  const [overHero, setOverHero] = useState(
-    () => typeof window !== 'undefined' && window.location.pathname === '/' && window.scrollY < window.innerHeight
-  )
+  const [overHero, setOverHero] = useState(isOverHero)
   const closeDropdownTimerRef = useRef(null)
   const location = useLocation()
 
@@ -99,7 +105,7 @@ export default function Navbar() {
         setOverHero(false)
         return
       }
-      setOverHero(window.scrollY < window.innerHeight * 0.85)
+      setOverHero(window.scrollY < window.innerHeight * HERO_OVERLAY_THRESHOLD)
     }
     check()
     window.addEventListener('scroll', check, { passive: true })
