@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import HeroSlider from '../components/HeroSlider'
-import StatsBar from '../components/home/StatsBar'
 import AboutPreview from '../components/home/AboutPreview'
 import ClientsTrusted from '../components/home/ClientsTrusted'
 // import Testimonials from '../components/home/Testimonials'
@@ -18,7 +17,6 @@ export default function HomePage() {
   return (
     <div>
       <HeroSlider />
-      <StatsBar />
       <AboutPreview />
       <ClientsTrusted />
       {/* <Testimonials /> */}

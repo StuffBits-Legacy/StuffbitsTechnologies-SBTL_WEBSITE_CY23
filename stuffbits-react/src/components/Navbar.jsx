@@ -1,155 +1,74 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Cpu,
-  Code2,
-  Package,
-  Monitor,
-  Car,
-  Factory,
-  Wifi,
-  Users,
-  Info,
-  Newspaper,
-  Sparkles,
-  Search,
-} from 'lucide-react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  // { to: '/', label: 'Home' },
   {
     label: 'Services',
     to: '/services',
     dropdown: [
-      {
-        to: '/services/embedded-hardware',
-        label: 'Embedded Hardware',
-        icon: Cpu,
-      },
-      {
-        to: '/services/embedded-firmware',
-        label: 'Embedded Firmware',
-        icon: Code2,
-      },
-      {
-        to: '/services/component-assembly',
-        label: 'Production',
-        icon: Package,
-      },
-      {
-        to: '/services/it-development',
-        label: 'Software Development',
-        icon: Monitor,
-      },
+      { to: '/services/embedded-hardware', label: 'Embedded Hardware' },
+      { to: '/services/embedded-firmware', label: 'Embedded Firmware' },
+      { to: '/services/component-assembly', label: 'Production' },
+      { to: '/services/it-development', label: 'Software Development' },
     ],
   },
   {
-    label: 'Verticals',
+    label: 'Industries',
     to: '/verticals',
     dropdown: [
-      {
-        to: '/verticals/automotive',
-        label: 'Automotive',
-        icon: Car,
-      },
-      {
-        to: '/verticals/industrial',
-        label: 'Industrial',
-        icon: Factory,
-      },
-      {
-        to: '/verticals/iot',
-        label: 'IIoT',
-        icon: Wifi,
-      },
-      {
-        to: '/verticals/digital-services',
-        label: 'Software Development',
-        icon: Monitor,
-      },
+      { to: '/verticals/automotive', label: 'Automotive' },
+      { to: '/verticals/industrial', label: 'Industrial' },
+      { to: '/verticals/iot', label: 'IIoT' },
+      { to: '/verticals/digital-services', label: 'Software Development' },
     ],
   },
   { to: '/products', label: 'Products' },
-  { to: '/portfolio', label: 'Portfolio' },
+  { to: '/portfolio', label: 'Work' },
   {
-    label: 'About',
+    label: 'Company',
     dropdown: [
-      {
-        to: '/about',
-        label: 'About Us',
-        icon: Info,
-      },
-      {
-        to: '/team',
-        label: 'Our Team',
-        icon: Users,
-      },
+      { to: '/about', label: 'About Us' },
+      { to: '/team', label: 'Our Team' },
+      { to: '/blog', label: 'Blog' },
+      { to: '/news-and-events', label: 'News & Events' },
     ],
   },
   { to: '/careers', label: 'Careers' },
-  {
-    label: 'Resources',
-    dropdown: [
-      {
-        to: '/blog',
-        label: 'Blog',
-        icon: Newspaper,
-      },
-      {
-        to: '/news-and-events',
-        label: 'News & Events',
-        icon: Sparkles,
-      },
-    ],
-  },
   { to: '/contact', label: 'Contact' },
 ]
+
+const linkClass = (active) =>
+  `relative inline-flex h-full items-center gap-1 px-2.5 text-[17px] font-medium tracking-tight transition-colors ${
+    active
+      ? 'text-gold after:absolute after:inset-x-2.5 after:-bottom-px after:h-0.5 after:bg-gold'
+      : 'text-slate-800 hover:text-gold'
+  }`
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
-  const closeDropdownTimerRef = useRef(null)
-  const [isOverHero, setIsOverHero] = useState(() =>
-    typeof window !== 'undefined' &&
-    window.location.pathname === '/' &&
-    window.scrollY < window.innerHeight
+  const [overHero, setOverHero] = useState(
+    () => typeof window !== 'undefined' && window.location.pathname === '/' && window.scrollY < window.innerHeight
   )
-  const [navSearch, setNavSearch] = useState('')
+  const closeDropdownTimerRef = useRef(null)
   const location = useLocation()
-  const navigate = useNavigate()
-
-  const submitNavSearch = (e) => {
-    e.preventDefault()
-    const q = navSearch.trim()
-    navigate(q ? `/blog?search=${encodeURIComponent(q)}` : '/blog')
-    setMobileOpen(false)
-  }
-
-  useEffect(() => {
-    const checkScroll = () => {
-      if (location.pathname !== '/') {
-        setIsOverHero(false)
-        return
-      }
-      setIsOverHero(window.scrollY < window.innerHeight)
-    }
-    checkScroll()
-    window.addEventListener('scroll', checkScroll)
-    return () => window.removeEventListener('scroll', checkScroll)
-  }, [location.pathname])
 
   const isActive = (to) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
-  const isAboutSection = () => location.pathname === '/about' || location.pathname === '/team'
-  const isServicesSection = () => location.pathname.startsWith('/services')
-  const isVerticalsSection = () => location.pathname.startsWith('/verticals')
-  const isResourcesSection = () =>
-    location.pathname.startsWith('/blog') || location.pathname.startsWith('/news-and-events')
 
-  const textClasses = isOverHero ? 'text-white hover:text-gold' : 'text-slate-700 hover:text-gold'
-  const activeClasses = 'text-gold border-b-2 border-gold'
+  const sectionActive = (item) => {
+    if (item.label === 'Company') {
+      return (
+        location.pathname === '/about' ||
+        location.pathname === '/team' ||
+        location.pathname.startsWith('/blog') ||
+        location.pathname.startsWith('/news-and-events')
+      )
+    }
+    if (item.label === 'Services') return location.pathname.startsWith('/services')
+    if (item.label === 'Industries') return location.pathname.startsWith('/verticals')
+    return item.to ? isActive(item.to) : false
+  }
 
   const openDropdownMenu = (label) => {
     if (closeDropdownTimerRef.current) {
@@ -167,171 +86,203 @@ export default function Navbar() {
   }
 
   useEffect(() => {
+    setMobileOpen(false)
+    setOpenDropdown(null)
+  }, [location.pathname])
+
+  useEffect(() => {
+    const check = () => {
+      if (location.pathname !== '/') {
+        setOverHero(false)
+        return
+      }
+      setOverHero(window.scrollY < window.innerHeight * 0.85)
+    }
+    check()
+    window.addEventListener('scroll', check, { passive: true })
+    return () => window.removeEventListener('scroll', check)
+  }, [location.pathname])
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      setOpenDropdown(null)
+      setMobileOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  useEffect(() => {
     return () => {
       if (closeDropdownTimerRef.current) window.clearTimeout(closeDropdownTimerRef.current)
     }
   }, [])
 
+  const onHero = overHero && !mobileOpen
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md ${
-        isOverHero ? 'bg-white/10' : 'bg-white/90 shadow-sm'
+      className={`fixed top-0 left-0 right-0 z-50 h-14 border-b transition-colors duration-300 ${
+        onHero
+          ? 'border-white/20 bg-white/30 backdrop-blur-sm'
+          : 'border-slate-200 bg-white'
       }`}
     >
-      <nav className="max-w-container mx-auto px-6 h-14 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex-shrink-0">
-          <img src="/icon-1.svg" alt="StuffBits" className="h-9" />
+      <nav className="mx-auto flex h-full max-w-[90rem] items-center justify-between gap-4 px-5 lg:px-8">
+        <Link to="/" className="shrink-0">
+          <img src="/icon-1.svg" alt="StuffBits" className="h-8" />
         </Link>
 
-        {/* Desktop Nav */}
-        <ul className="hidden lg:flex items-center gap-1">
-          {navLinks.map((item) => (
-            <li
-              key={item.label}
-              className="relative group"
-              onMouseEnter={() => (item.dropdown ? openDropdownMenu(item.label) : openDropdownMenu(null))}
-              onMouseLeave={() => (item.dropdown ? scheduleCloseDropdown() : undefined)}
-            >
-              {item.dropdown ? (
-                item.to ? (
-                  <Link
-                    to={item.to}
-                    className={`px-4 py-1.5 font-medium transition-colors flex items-center gap-1.5 group/btn ${
-                      (isAboutSection() && item.label === 'About') ||
-                      (isServicesSection() && item.label === 'Services') ||
-                      (isVerticalsSection() && item.label === 'Verticals') ||
-                      (isResourcesSection() && item.label === 'Resources')
-                        ? activeClasses
-                        : textClasses
-                    }`}
-                    onFocus={() => openDropdownMenu(item.label)}
-                  >
-                    {item.label}
-                    <ChevronDown
-                      size={16}
-                      className={`shrink-0 transition-transform duration-300 ease-out group-hover/btn:translate-y-0.5 ${
-                        openDropdown === item.label ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </Link>
+        <ul className="hidden items-center lg:flex">
+          {navLinks.map((item) => {
+            const active = sectionActive(item)
+            return (
+              <li
+                key={item.label}
+                className="relative flex h-14 items-center"
+                onMouseEnter={() => (item.dropdown ? openDropdownMenu(item.label) : openDropdownMenu(null))}
+                onMouseLeave={() => (item.dropdown ? scheduleCloseDropdown() : undefined)}
+              >
+                {item.dropdown ? (
+                  item.to ? (
+                    <Link
+                      to={item.to}
+                      className={linkClass(active)}
+                      aria-expanded={openDropdown === item.label}
+                      aria-haspopup="true"
+                      onFocus={() => openDropdownMenu(item.label)}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      className={linkClass(active)}
+                      aria-expanded={openDropdown === item.label}
+                      aria-haspopup="true"
+                      onFocus={() => openDropdownMenu(item.label)}
+                      onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                    >
+                      {item.label}
+                    </button>
+                  )
                 ) : (
-                  <button
-                    className={`px-4 py-1.5 font-medium transition-colors flex items-center gap-1.5 group/btn ${
-                      (isAboutSection() && item.label === 'About') ||
-                      (isServicesSection() && item.label === 'Services') ||
-                      (isVerticalsSection() && item.label === 'Verticals') ||
-                      (isResourcesSection() && item.label === 'Resources')
-                        ? activeClasses
-                        : textClasses
-                    }`}
-                    onFocus={() => openDropdownMenu(item.label)}
-                    type="button"
-                  >
+                  <NavLink to={item.to} className={() => linkClass(active)}>
                     {item.label}
-                    <ChevronDown
-                      size={16}
-                      className={`shrink-0 transition-transform duration-300 ease-out group-hover/btn:translate-y-0.5 ${
-                        openDropdown === item.label ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                )
-              ) : (
-                <NavLink
-                  to={item.to}
-                  className={({ isActive: active }) =>
-                    `px-4 py-1.5 font-medium transition-colors block ${active ? activeClasses : textClasses}`
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              )}
-              {item.dropdown && openDropdown === item.label && (
-                <div
-                  className="absolute top-full left-0 mt-3 min-w-[16rem] overflow-hidden rounded-sm bg-white shadow-xl border border-slate-200"
-                  onMouseEnter={() => openDropdownMenu(item.label)}
-                  onMouseLeave={scheduleCloseDropdown}
-                >
-                  {item.dropdown.map((d) => {
-                    const Icon = d.icon
-                    return (
-                      <Link
-                        key={d.label}
-                        to={d.to}
-                        className="group/item flex items-center gap-4 px-5 py-3.5 text-navy hover:bg-gold/10 transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {Icon && (
-                          <Icon
-                            size={22}
-                            strokeWidth={1.5}
-                            className="shrink-0 text-gold"
-                          />
-                        )}
-                        <span className="text-[0.95rem] font-medium leading-5 whitespace-nowrap group-hover/item:text-gold transition-colors">
+                  </NavLink>
+                )}
+
+                {item.dropdown && openDropdown === item.label && (
+                  <div
+                    className="absolute left-0 top-full z-50 min-w-[18rem] border border-slate-200 bg-white py-1.5"
+                    onMouseEnter={() => openDropdownMenu(item.label)}
+                    onMouseLeave={scheduleCloseDropdown}
+                  >
+                    {item.dropdown.map((d) => (
+                      <div key={d.to}>
+                        <Link
+                          to={d.to}
+                          className={`block px-4 py-2.5 text-sm ${
+                            location.pathname === d.to
+                              ? 'bg-slate-50 text-gold'
+                              : 'text-slate-800 hover:bg-slate-50 hover:text-gold'
+                          }`}
+                          onClick={() => setOpenDropdown(null)}
+                        >
                           {d.label}
-                        </span>
-                      </Link>
-                    )
-                  })}
-                </div>
-              )}
-            </li>
-          ))}
+                        </Link>
+                        {d.children?.map((child) => (
+                          <Link
+                            key={child.to}
+                            to={child.to}
+                            className={`block py-2 pl-7 pr-4 text-sm ${
+                              location.pathname === child.to
+                                ? 'bg-slate-50 text-gold'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-gold'
+                            }`}
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </li>
+            )
+          })}
         </ul>
 
-        {/* Mobile toggle */}
         <button
-          className={`lg:hidden p-2 transition-colors ${isOverHero ? 'text-white' : 'text-slate-700'}`}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          type="button"
+          className="p-2 text-slate-800 lg:hidden"
+          onClick={() => setMobileOpen((open) => !open)}
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </nav>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden absolute top-14 left-0 right-0 bg-white border-t border-slate-200 shadow-lg max-h-[calc(100vh-3.5rem)] overflow-y-auto">
-          <ul className="px-6 py-4 space-y-1">
+        <div className="absolute top-14 left-0 right-0 max-h-[calc(100vh-3.5rem)] overflow-y-auto border-t border-slate-200 bg-white lg:hidden">
+          <ul className="px-5 py-3">
             {navLinks.map((item) => (
-              <li key={item.label}>
+              <li key={item.label} className="border-b border-slate-100 last:border-b-0">
                 {item.dropdown ? (
-                  <div className="py-2">
+                  <div className="py-3">
                     {item.to ? (
                       <Link
                         to={item.to}
-                        className={`block font-medium mb-2 ${isActive(item.to) ? 'text-gold' : 'text-slate-700 hover:text-gold'}`}
+                        className={`block text-[17px] font-medium ${sectionActive(item) ? 'text-gold' : 'text-slate-800'}`}
                         onClick={() => setMobileOpen(false)}
                       >
                         {item.label}
                       </Link>
                     ) : (
-                      <p className="font-medium text-slate-700 mb-2">{item.label}</p>
+                      <p className={`text-[17px] font-medium ${sectionActive(item) ? 'text-gold' : 'text-slate-800'}`}>
+                        {item.label}
+                      </p>
                     )}
-                    <ul className="pl-4 space-y-1">
-                      {item.dropdown.map((d) => {
-                        const Icon = d.icon
-                        return (
-                          <li key={d.label}>
-                            <Link
-                              to={d.to}
-                              className="flex items-center gap-3 py-1 text-slate-600 hover:text-gold"
-                              onClick={() => setMobileOpen(false)}
-                            >
-                              {Icon && <Icon size={18} className="text-gold shrink-0" />}
-                              {d.label}
-                            </Link>
-                          </li>
-                        )
-                      })}
+                    <ul className="mt-2 space-y-1 pl-3">
+                      {item.dropdown.map((d) => (
+                        <li key={d.to}>
+                          <Link
+                            to={d.to}
+                            className={`block py-1.5 text-sm ${
+                              location.pathname === d.to ? 'text-gold' : 'text-slate-600'
+                            }`}
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            {d.label}
+                          </Link>
+                          {d.children?.length > 0 && (
+                            <ul className="mb-1 ml-3 border-l border-slate-200">
+                              {d.children.map((child) => (
+                                <li key={child.to}>
+                                  <Link
+                                    to={child.to}
+                                    className={`block py-1.5 pl-3 text-sm ${
+                                      location.pathname === child.to ? 'text-gold' : 'text-slate-600'
+                                    }`}
+                                    onClick={() => setMobileOpen(false)}
+                                  >
+                                    {child.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 ) : (
                   <Link
                     to={item.to}
-                    className={`block py-2 font-medium ${isActive(item.to) ? 'text-gold' : 'text-slate-700 hover:text-gold'}`}
+                    className={`block py-3 text-[17px] font-medium ${sectionActive(item) ? 'text-gold' : 'text-slate-800'}`}
                     onClick={() => setMobileOpen(false)}
                   >
                     {item.label}
@@ -339,26 +290,6 @@ export default function Navbar() {
                 )}
               </li>
             ))}
-            <li className="pt-4">
-              <form onSubmit={submitNavSearch} className="space-y-3">
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                  <input
-                    type="search"
-                    placeholder="Search posts..."
-                    value={navSearch}
-                    onChange={(e) => setNavSearch(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-white text-navy placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="block w-full py-3 text-center bg-gold text-navy font-semibold rounded hover:bg-gold-light transition-colors"
-                >
-                  Search
-                </button>
-              </form>
-            </li>
           </ul>
         </div>
       )}
